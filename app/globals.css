@@ -1,0 +1,217 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-serif: "Cormorant Garamond", Georgia, serif;
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: #F4EFE6;
+  color: #1A1715;
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+}
+
+/* Only hide the native cursor when our custom Cursor component has
+   marked the document as ready. Set/cleared from Cursor.tsx on mount/unmount. */
+html.has-custom-cursor,
+html.has-custom-cursor body,
+html.has-custom-cursor a,
+html.has-custom-cursor button,
+html.has-custom-cursor [role="button"] {
+  cursor: none !important;
+}
+
+@media (hover: none) and (pointer: coarse) {
+  html.has-custom-cursor,
+  html.has-custom-cursor body,
+  html.has-custom-cursor a,
+  html.has-custom-cursor button,
+  html.has-custom-cursor [role="button"] {
+    cursor: auto !important;
+  }
+}
+
+/* Type primitives */
+.display-1 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  letter-spacing: -0.04em;
+  line-height: 0.92;
+}
+.display-2 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  line-height: 0.95;
+}
+.eyebrow {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+.label {
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #8C7A66;
+}
+.serif {
+  font-family: var(--font-serif);
+}
+
+/* Helpers */
+.img-zoom {
+  overflow: hidden;
+}
+.img-zoom img {
+  transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.img-zoom:hover img {
+  transform: scale(1.04);
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.link-underline {
+  position: relative;
+  display: inline-block;
+}
+.link-underline::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.link-underline:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* Inverted sections (dark) */
+.invert-section {
+  background: #1A1715;
+  color: #F4EFE6;
+}
+
+/* Custom cursor — ALWAYS visible on devices with a mouse / trackpad.
+   Hidden only on real touch devices via @media (hover: none) + (pointer: coarse). */
+.cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 2147483647; /* max safe int, guaranteed on top of everything */
+  display: block;
+  visibility: visible;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 2147483646;
+  display: block;
+  visibility: visible;
+  margin: 0;
+  padding: 0;
+}
+.cursor-line-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 2147483645;
+  display: block;
+  visibility: visible;
+}
+.cursor-stars-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  width: 100vw;
+  height: 100vh;
+  z-index: 2147483644;
+  display: block;
+  visibility: visible;
+  overflow: hidden;
+}
+
+/* Hide the custom cursor on real touch-only devices. */
+@media (hover: none) and (pointer: coarse) {
+  html,
+  body {
+    cursor: auto !important;
+  }
+  .cursor-dot,
+  .cursor-ring,
+  .cursor-line-canvas,
+  .cursor-stars-canvas {
+    display: none !important;
+  }
+}
+
+/* Star sparkle keyframes for cursor trail */
+@keyframes starTwinkle {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1) rotate(0deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.2) rotate(180deg);
+  }
+}
+
+.cursor-star {
+  position: absolute;
+  pointer-events: none;
+  animation: starTwinkle 1.2s ease-out forwards;
+  will-change: opacity, transform;
+}
+
+::selection {
+  background: #1A1715;
+  color: #F4EFE6;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #F4EFE6;
+}
+::-webkit-scrollbar-thumb {
+  background: #1A1715;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #26211D;
+}
